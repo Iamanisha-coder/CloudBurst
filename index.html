@@ -4,30 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>CloudBurst Weather Portal</title>
 </head>
 <body>
     <div class="weather-container">
         <div class="search-box">
-            <input type="text" id="city-input" placeholder="Enter city name...">
-            <button id="search-btn">Search</button>
+            <input type="text" id="city-input" placeholder="Enter city name..." autocomplete="off">
+            <button id="search-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
         </div>
 
         <div class="weather-info" id="weather-info" style="display: none;">
             <h2 id="city-name">London, GB</h2>
+            
+            <div id="weather-icon-box" class="weather-icon-box">☀️</div>
+
             <div class="temp-container">
-                <span id="temperature">20</span>°C
+                <span id="temperature">20</span><span class="unit">°C</span>
             </div>
+            
             <p id="description">Clear Sky</p>
+
+            <p id="weather-quote" class="weather-quote">"Wherever you go, no matter what the weather, always bring your own sunshine."</p>
             
             <div class="details">
                 <div class="col">
+                    <div class="icon-wrap">💧</div>
                     <div>
                         <p id="humidity">50%</p>
                         <p class="label">Humidity</p>
                     </div>
                 </div>
                 <div class="col">
+                    <div class="icon-wrap">💨</div>
                     <div>
                         <p id="wind">15 km/h</p>
                         <p class="label">Wind Speed</p>
@@ -39,6 +50,10 @@
         <div class="error-msg" id="error-msg" style="display: none;">
             <p>❌ City not found. Please try again.</p>
         </div>
+
+        <footer class="creator-signature">
+            <p>Produced by <a href="https://github.com/Iamanisha-coder" target="_blank" rel="noopener noreferrer">Iamanisha-coder</a></p>
+        </footer>
     </div>
 
     <script src="script.js"></script>
