@@ -9,11 +9,31 @@ const description = document.getElementById('description');
 const humidity = document.getElementById('humidity');
 const wind = document.getElementById('wind');
 
+// Helper function to dynamically shift background themes
+function updateTheme(weatherDesc) {
+    const body = document.body;
+    const desc = weatherDesc.toLowerCase();
+
+    // Reset themes first
+    body.removeAttribute('data-theme');
+
+    if (desc.includes('clear') || desc.includes('sunny')) {
+        body.setAttribute('data-theme', 'sunny');
+    } else if (desc.includes('rain') || desc.includes('drizzle') || desc.includes('shower')) {
+        body.setAttribute('data-theme', 'rainy');
+    } else if (desc.includes('snow') || desc.includes('ice') || desc.includes('freeze')) {
+        body.setAttribute('data-theme', 'snowy');
+    } else if (desc.includes('cloud') || desc.includes('overcast') || desc.includes('mist') || desc.includes('fog')) {
+        body.setAttribute('data-theme', 'cloudy');
+    } else {
+        body.setAttribute('data-theme', 'default');
+    }
+}
+
 async function checkWeather(city) {
     if (!city) return;
 
     try {
-        // Fetch JSON weather data from wttr.in format
         const response = await fetch(`https://wttr.in/${city}?format=j1`);
         
         if (!response.ok) {
@@ -22,7 +42,6 @@ async function checkWeather(city) {
 
         const data = await response.json();
 
-        // Extracting data from the wttr.in JSON architecture
         const currentCondition = data.current_condition[0];
         const areaInfo = data.nearest_area[0];
 
@@ -33,14 +52,18 @@ async function checkWeather(city) {
         humidity.innerText = `${currentCondition.humidity}%`;
         wind.innerText = `${currentCondition.windspeedKmh} km/h`;
 
+        // Change the background theme based on description string
+        updateTheme(currentCondition.weatherDesc[0].value);
+
         // Toggle visibility
         errorMsg.style.display = "none";
         weatherInfo.style.display = "block";
 
     } catch (error) {
-        console.error(error); // Logs the actual error to your browser console
+        console.error(error);
         weatherInfo.style.display = "none";
         errorMsg.style.display = "block";
+        document.body.removeAttribute('data-theme'); // Reset to black on error
     }
 }
 
@@ -48,7 +71,6 @@ searchBtn.addEventListener('click', () => {
     checkWeather(cityInput.value.trim());
 });
 
-// Changed from 'keypress' to 'keydown' for modern browser compatibility
 cityInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         checkWeather(cityInput.value.trim());
