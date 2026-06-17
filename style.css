@@ -1,111 +1,36 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
+/* Smoothly transition background colors when theme changes */
 body {
-    background-color: #1e1e24;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+    transition: background 0.8s ease, color 0.5s ease;
+    background: #0f172a; /* Default deep dark blue/black code */
 }
 
-.weather-container {
-    background-color: #2a2a35;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
-    width: 100%;
-    max-width: 380px;
-    text-align: center;
+/* ☀️ Sunny/Clear Theme */
+body[data-theme="sunny"] {
+    background: linear-gradient(135deg, #f59e0b, #d97706, #1e293b);
 }
 
-.search-box {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 25px;
+/* 🌧️ Rainy Theme */
+body[data-theme="rainy"] {
+    background: linear-gradient(135deg, #312e81, #1e3a8a, #0f172a);
 }
 
-#city-input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #444;
-    background-color: #1e1e24;
-    color: white;
-    font-size: 1rem;
+/* ☁️ Cloudy/Overcast/Fog Theme */
+body[data-theme="cloudy"] {
+    background: linear-gradient(135deg, #475569, #334155, #1e293b);
 }
 
-#city-input:focus {
-    outline: none;
-    border-color: #00adb5;
+/* ❄️ Snowy Theme */
+body[data-theme="snowy"] {
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e1, #475569);
+    color: #0f172a; /* Changes app text color darker so it is readable on white snow backgrounds */
 }
-
-#search-btn {
-    padding: 12px 18px;
-    background-color: #00adb5;
-    color: white;
-    border: none;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s;
+body[data-theme="snowy"] .weather-container {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #0f172a;
 }
-
-#search-btn:hover {
-    background-color: #007a80;
-}
-
-h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-}
-
-.temp-container {
-    font-size: 3.5rem;
-    font-weight: bold;
-    color: #00adb5;
-    margin: 15px 0;
-}
-
-#description {
-    font-size: 1.1rem;
-    text-transform: capitalize;
-    opacity: 0.8;
-    margin-bottom: 25px;
-}
-
-.details {
-    display: flex;
-    justify-content: space-between;
-    background-color: #1e1e24;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #333;
-}
-
-.col {
-    flex: 1;
-}
-
-.col p {
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.col .label {
-    font-size: 0.85rem;
-    opacity: 0.5;
-    margin-top: 4px;
-}
-
-.error-msg {
-    color: #ff5252;
-    margin-top: 15px;
-    font-weight: 500;
+body[data-theme="snowy"] #city-input {
+    background: rgba(255, 255, 255, 0.6);
+    color: #0f172a;
 }
