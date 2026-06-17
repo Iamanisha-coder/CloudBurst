@@ -38,6 +38,7 @@ async function checkWeather(city) {
         weatherInfo.style.display = "block";
 
     } catch (error) {
+        console.error(error); // Logs the actual error to your browser console
         weatherInfo.style.display = "none";
         errorMsg.style.display = "block";
     }
@@ -47,7 +48,8 @@ searchBtn.addEventListener('click', () => {
     checkWeather(cityInput.value.trim());
 });
 
-cityInput.addEventListener('keypress', (e) => {
+// Changed from 'keypress' to 'keydown' for modern browser compatibility
+cityInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         checkWeather(cityInput.value.trim());
     }
