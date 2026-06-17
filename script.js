@@ -8,25 +8,36 @@ const temperature = document.getElementById('temperature');
 const description = document.getElementById('description');
 const humidity = document.getElementById('humidity');
 const wind = document.getElementById('wind');
+const iconBox = document.getElementById('weather-icon-box');
+const quoteBox = document.getElementById('weather-quote');
 
-// Helper function to dynamically shift background themes
-function updateTheme(weatherDesc) {
+// 🌟 Engine tracking smart contextual environmental quotes
+function updateThemeIconAndQuote(weatherDesc) {
     const body = document.body;
     const desc = weatherDesc.toLowerCase();
 
-    // Reset themes first
     body.removeAttribute('data-theme');
 
     if (desc.includes('clear') || desc.includes('sunny')) {
         body.setAttribute('data-theme', 'sunny');
+        iconBox.textContent = "☀️";
+        quoteBox.innerText = '"Keep your face always toward the sunshine, and shadows will fall behind you."';
     } else if (desc.includes('rain') || desc.includes('drizzle') || desc.includes('shower')) {
         body.setAttribute('data-theme', 'rainy');
+        iconBox.textContent = "🌧️";
+        quoteBox.innerText = '"Some people feel the rain. Others just get wet."';
     } else if (desc.includes('snow') || desc.includes('ice') || desc.includes('freeze')) {
         body.setAttribute('data-theme', 'snowy');
+        iconBox.textContent = "❄️";
+        quoteBox.innerText = '"To appreciate the beauty of a snowflake, it is necessary to stand out in the cold."';
     } else if (desc.includes('cloud') || desc.includes('overcast') || desc.includes('mist') || desc.includes('fog')) {
         body.setAttribute('data-theme', 'cloudy');
+        iconBox.textContent = "☁️";
+        quoteBox.innerText = '"Behind every cloud is another cloud... just kidding, there is a blue sky!"';
     } else {
         body.setAttribute('data-theme', 'default');
+        iconBox.textContent = "✨";
+        quoteBox.innerText = '"No matter what the weather looks like, have a beautiful day!"';
     }
 }
 
@@ -45,17 +56,17 @@ async function checkWeather(city) {
         const currentCondition = data.current_condition[0];
         const areaInfo = data.nearest_area[0];
 
-        // Update DOM elements
+        // Update DOM metrics arrays
         cityName.innerText = `${areaInfo.areaName[0].value}, ${areaInfo.country[0].value}`;
         temperature.innerText = currentCondition.temp_C;
         description.innerText = currentCondition.weatherDesc[0].value;
         humidity.innerText = `${currentCondition.humidity}%`;
         wind.innerText = `${currentCondition.windspeedKmh} km/h`;
 
-        // Change the background theme based on description string
-        updateTheme(currentCondition.weatherDesc[0].value);
+        // Update presentation layout components
+        updateThemeIconAndQuote(currentCondition.weatherDesc[0].value);
 
-        // Toggle visibility
+        // Turn portal card elements visible
         errorMsg.style.display = "none";
         weatherInfo.style.display = "block";
 
@@ -63,7 +74,7 @@ async function checkWeather(city) {
         console.error(error);
         weatherInfo.style.display = "none";
         errorMsg.style.display = "block";
-        document.body.removeAttribute('data-theme'); // Reset to black on error
+        document.body.removeAttribute('data-theme');
     }
 }
 
